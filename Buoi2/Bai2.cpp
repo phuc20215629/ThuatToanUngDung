@@ -1,11 +1,10 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-int n, k, sol = INT_MAX, cmin = INT_MAX;
+int n, k, f = 0, sol = INT_MAX, cmin = INT_MAX;
 vector<bool> visited;
 vector<vector<int>> C;
 vector<int> x;
-int f = 0;
 
 bool check(int v, int load)
 {
@@ -24,18 +23,8 @@ bool check(int v, int load)
     return true;
 }
 
-int tryPath(int k, int load)
+void tryPath(int k, int load)
 {
-    if (k == 2 * n) // Reached the last city, updateBest
-    {
-        if (f + C[x[k - 1]][0] < sol)
-        {
-            sol = f + C[x[k - 1]][0];
-        }
-        return sol;
-    }
-
-    int minCost = INT_MAX;
     for (int v = 1; v <= 2 * n; v++)
     {
         if (check(v, load))
@@ -47,23 +36,28 @@ int tryPath(int k, int load)
                 load++;
             else
                 load--;
-
-            if (f + cmin * (2 * n + 1 - k) < sol) // Prune unpromising paths
+            if (k == 2 * n) //updateBest
             {
-                int cost = tryPath(k + 1, load);
-                minCost = min(minCost, cost);
+                if (f + C[v][0] < sol)
+                {
+                    sol = f + C[v][0];
+                }
+            }
+            else
+            {
+                if (f + cmin * (2 * n + 1 - k) < sol)
+                    tryPath(k + 1, load);
             }
 
+            //Return the status before backtracking
+            f -= C[x[k - 1]][v];
             visited[v] = false;
             if (v <= n)
                 load--;
             else
                 load++;
-            f -= C[x[k - 1]][v];
         }
     }
-
-    return minCost;
 }
 
 int main()
@@ -82,7 +76,7 @@ int main()
         for (int j = 0; j < m; j++)
         {
             cin >> C[i][j];
-            cmin = min(C[i][j], cmin);
+            if(i != j) cmin = min(C[i][j], cmin);
         }
     }
 
