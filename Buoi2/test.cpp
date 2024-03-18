@@ -1,92 +1,78 @@
-#include <bits/stdc++.h>
+#include<bits/stdc++.h>
 using namespace std;
 
-int n, k, sol = INT_MAX, cmin = INT_MAX;
-vector<bool> visited;
-vector<vector<int>> C;
-vector<int> x;
-int f = 0;
+int m, n, sol = INT_MAX;
+vector<vector<bool>> confCourse;
+vector<vector<int>> prefList;
+vector<int> load;
+vector<int> teacher_for_course;
 
-bool check(int v, int load)
-{
-    if (visited[v])
-        return false;
-    if (v > n)
-    {
-        if (!visited[v - n])
-            return false; // to visit city v (v > n), city v - n must be visited before
-    }
-    else
-    {
-        if (load + 1 > k)
-            return false; // if the bus is already full
-    }
-    return true;
-}
-
-int tryPath(int k, int load)
-{
-    if (k == 2 * n) // Reached the last city, updateBest
-    {
-        if (f + C[x[k - 1]][0] < sol)
-        {
-            sol = f + C[x[k - 1]][0];
+bool check(int course, int teacher) {
+    //find course k in teacher's i prefList
+    bool found = false;
+    for (auto x : prefList[teacher]) {
+        if (course == x) {
+            found = true;
+            break;
         }
-        return sol;
     }
-
-    int minCost = INT_MAX;
-    for (int v = 1; v <= 2 * n; v++)
-    {
-        if (check(v, load))
-        {
-            x[k] = v;
-            f += C[x[k - 1]][v];
-            visited[v] = true;
-            if (v <= n)
-                load++;
-            else
-                load--;
-
-            if (f + cmin * (2 * n + 1 - k) < sol) // Prune unpromising paths
-            {
-                int cost = tryPath(k + 1, load);
-                minCost = min(minCost, cost);
+    if (found) {
+        for (int i = 1; i <= m; i++) {
+            //if appears conflict
+            if (teacher == teacher_for_course[i] && (confCourse[course][i] || confCourse[i][course])) {
+                return false;
             }
-
-            visited[v] = false;
-            if (v <= n)
-                load--;
-            else
-                load++;
-            f -= C[x[k - 1]][v];
         }
+        return true;
     }
-
-    return minCost;
+    //if course is not found in the prefList[teacher]
+    return false;
 }
 
-int main()
-{
-    ios_base::sync_with_stdio(0);
-    cin.tie(0);
-    cout.tie(0);
-    cin >> n >> k;
-    int m = 2 * n + 1;
-    C.resize(m, vector<int>(m, 0));
-    visited.resize(m, false);
-    x.resize(m, 0);
-
-    for (int i = 0; i < m; i++)
-    {
-        for (int j = 0; j < m; j++)
-        {
-            cin >> C[i][j];
-            cmin = min(C[i][j], cmin);
+void tryCourse(int k) {
+    for (int i = 1; i <= m; i++) {
+        if (check(k, i)) {
+            load[i]++; //add course k to teacher's i load
+            teacher_for_course[k] = i;
+            if (k == n) {
+                int maxLoad = INT_MIN;
+                for (auto l : load) {
+                    maxLoad = max(maxLoad, l);
+                }
+                sol = min(sol, maxLoad);
+            } else {
+                if(load[i] < sol) tryCourse(k + 1);
+            }
+            teacher_for_course[k] = 0;
+            load[i]--;
         }
     }
+}
 
-    tryPath(1, 0);
+int main() {
+    ios_base::sync_with_stdio(0); cin.tie(0); cout.tie(0);
+    cin >> m >> n;
+    prefList.resize(50);
+    load.resize(50);
+    teacher_for_course.resize(50);
+
+    int k;
+    for (int i = 1; i <= m; i++) {
+        cin >> k;
+        prefList[i].resize(50, 0);
+        for (int j = 1; j <= k; j++) {
+            cin >> prefList[i][j];
+        }
+    }
+    cin >> k;
+    confCourse.resize(50, vector<bool>(50, false));
+    for (int i = 0; i < k; i++) {
+        int a, b;
+        cin >> a >> b;
+        confCourse[a][b] = true;
+    }
+
+    tryCourse(1);
     cout << sol << endl;
     return 0;
 }
