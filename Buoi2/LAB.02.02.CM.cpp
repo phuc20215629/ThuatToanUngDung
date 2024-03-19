@@ -2,8 +2,8 @@
 using namespace std;
 
 int H, W, n, sol = 0;
-int h[15], w[15];
-int marked[30][30];
+vector<int> h, w;
+vector<vector<bool>> marked;
 
 bool check(int wk, int hk, int x, int y)
 {
@@ -22,11 +22,11 @@ bool check(int wk, int hk, int x, int y)
     return true;
 }
 
-void mark(int wk, int hk, int x, int y, bool markVal)
-{
-    for (int i = x; i < x + wk; i++)
+void mark(int wk, int hk, int startX, int startY, bool markVal)
+{ 
+    for (int i = startX; i < startX + wk; i++)
     {
-        for (int j = y; j < y + hk; j++)
+        for (int j = startY; j < startY + hk; j++)
         {
             marked[i][j] = markVal;
         }
@@ -35,7 +35,12 @@ void mark(int wk, int hk, int x, int y, bool markVal)
 
 void trySol(int k)
 {
-    if(sol == 1) return;
+
+    if (k == n)
+    {
+        sol = 1;
+        return;
+    }
 
     for (int rotate = 0; rotate <= 1; rotate++)
     {
@@ -52,14 +57,8 @@ void trySol(int k)
                 if (check(wk, hk, x, y))
                 {
                     mark(wk, hk, x, y, true); // mark all the unit inside the rect to avoid overlapping
-
-                    if (k == n - 1)
-                    {
-                        sol = 1;
-                        return;
-                    }              
-                    else
-                        trySol(k + 1);
+                    
+                    trySol(k + 1);
 
                     mark(wk, hk, x, y, false); // unmark for backtracking
                 }
@@ -75,6 +74,9 @@ int main()
     cout.tie(0);
     cin >> H >> W;
     cin >> n;
+    h.resize(n, 0);
+    w.resize(n, 0);
+    marked.resize(H, vector<bool>(W, false));
 
     for (int i = 0; i < n; i++)
     {
@@ -83,6 +85,6 @@ int main()
 
     trySol(0);
 
-    cout << sol;
+    cout << sol << endl;
     return 0;
-}  
+}
