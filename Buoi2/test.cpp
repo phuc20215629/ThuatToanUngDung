@@ -2,8 +2,8 @@
 using namespace std;
 
 int H, W, n, sol = 0;
-int h[15], w[15];
-int marked[30][30];
+vector<int> h, w;
+vector<vector<bool>> marked;
 
 bool check(int wk, int hk, int x, int y)
 {
@@ -75,6 +75,9 @@ int main()
     cout.tie(0);
     cin >> H >> W;
     cin >> n;
+    h.resize(15, 0);
+    w.resize(15, 0);
+    marked.resize(30, vector<bool>(30, false));
 
     for (int i = 0; i < n; i++)
     {
