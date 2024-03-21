@@ -1,91 +1,59 @@
-#include <bits/stdc++.h>
+//C++ 
+#include <bits/stdc++.h> 
 using namespace std;
 
-int H, W, n, sol = 0;
-vector<int> h, w;
-vector<vector<bool>> marked;
+int n, K, load = 0, currL = 0, sol = INT_MAX, cmin = INT_MAX;
+int c[25][25] = { 0 }, curr[25] = { 0 };
+bool visited[25] = { false };
 
-bool check(int wk, int hk, int x, int y)
-{
-    if (wk + x > W || hk + y > H) // if that rect is out of range
-        return false;
-
-    for (int i = x; i < x + wk; i++) // check for overlapping rect
-    {
-        for (int j = y; j < y + hk; j++)
-        {
-            if (marked[i][j])
-                return false;
-        }
+bool check(int i) {
+    if(visited[i]) return false;
+    if(i > n) {
+        if(!visited[i - n]) return false; 
     }
-
+    else {
+        if(load == K) return false;
+    }
+    
     return true;
 }
 
-void mark(int wk, int hk, int x, int y, bool markVal)
-{
-    for (int i = x; i < x + wk; i++)
-    {
-        for (int j = y; j < y + hk; j++)
-        {
-            marked[i][j] = markVal;
-        }
-    }
-}
-
-void trySol(int k)
-{
-    if(sol == 1) return;
-
-    for (int rotate = 0; rotate <= 1; rotate++)
-    {
-        int wk = w[k], hk = h[k];
-        if (rotate == 1)
-        { // rotate 90°
-            wk = h[k];
-            hk = w[k];
-        }
-        for (int x = 0; x <= W - wk; x++)
-        {
-            for (int y = 0; y <= H - hk; y++)
-            {
-                if (check(wk, hk, x, y))
-                {
-                    mark(wk, hk, x, y, true); // mark all the unit inside the rect to avoid overlapping
-
-                    if (k == n - 1)
-                    {
-                        sol = 1;
-                        return;
-                    }              
-                    else
-                        trySol(k + 1);
-
-                    mark(wk, hk, x, y, false); // unmark for backtracking
-                }
+void tryRoute(int k) {
+    for(int i = 1; i <= 2 * n; i++) {
+        if(check(i)) {
+            curr[k] = i;
+            visited[i] = true;
+            currL += c[curr[k - 1]][i];
+            if(i <= n) load++;
+            else load--;
+            
+            if(k == 2 * n) {
+                if(sol > currL + c[i][0]) sol = currL + c[i][0];
             }
+            else {
+                if(currL + cmin*(2*n - k + 1) < sol) tryRoute(k + 1); 
+            }
+            
+            visited[i] = false;
+            currL -= c[curr[k - 1]][i];
+            if(i <= n) load--;
+            else load++;
         }
     }
 }
 
-int main()
-{
-    ios_base::sync_with_stdio(0);
-    cin.tie(0);
-    cout.tie(0);
-    cin >> H >> W;
-    cin >> n;
-    h.resize(15, 0);
-    w.resize(15, 0);
-    marked.resize(30, vector<bool>(30, false));
-
-    for (int i = 0; i < n; i++)
-    {
-        cin >> h[i] >> w[i];
+int main() 
+{ 
+    ios_base::sync_with_stdio(0); cin.tie(0); cout.tie(0);
+    cin >> n >> K;
+    
+    for(int i = 0; i <= 2*n; i++) {
+        for(int j = 0; j <= 2*n; j++) {
+            cin >> c[i][j];
+            if(i != j) cmin = min(cmin, c[i][j]);
+        }
     }
-
-    trySol(0);
-
+    
+    tryRoute(1);
     cout << sol;
-    return 0;
-}  
+}
