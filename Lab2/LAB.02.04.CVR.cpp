@@ -33,7 +33,7 @@ void tryX(int s, int k) { // trying deliver points for x[s]
             else { // v == 0 truck has reached the end point
                 if(k == K) { // all truck has been assigned a route
                     if(segments == n + nbR) { // all delivery points are reached
-                        if(sol > f) sol = f;
+                        if(sol > f && K == nbR) sol = f;
                     }
                 }
                 else { // k < K
