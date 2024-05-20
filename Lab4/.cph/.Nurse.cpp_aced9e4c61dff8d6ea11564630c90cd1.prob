@@ -1,0 +1,1 @@
+{"name":"Local: Nurse","url":"d:\\Code\\TTUD\\Lab4\\Nurse.cpp","tests":[{"id":1714962768246,"input":"6 2 3","output":"4"},{"id":1714963227510,"input":"200 50 70","output":"421"}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"d:\\Code\\TTUD\\Lab4\\Nurse.cpp","group":"local","local":true}

@@ -1,0 +1,1 @@
+{"name":"Local: MaxIndependentSetTree","url":"d:\\Code\\TTUD\\TrenLop\\MaxIndependentSetTree.cpp","tests":[{"id":1713929964361,"input":"9\n9 5 10 4 3 2 6 1 8\n1 5\n2 3\n2 4\n2 6\n3 5\n6 7\n6 8\n6 9","output":"38"}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"d:\\Code\\TTUD\\TrenLop\\MaxIndependentSetTree.cpp","group":"local","local":true}
