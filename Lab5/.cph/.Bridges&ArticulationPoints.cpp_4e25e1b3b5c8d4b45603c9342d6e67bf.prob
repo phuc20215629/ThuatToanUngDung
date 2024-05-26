@@ -1,0 +1,1 @@
+{"name":"Local: Bridges&ArticulationPoints","url":"d:\\Code\\TTUD\\Lab5\\Bridges&ArticulationPoints.cpp","tests":[{"id":1716188706847,"input":"10 12\n1 10\n10 2\n10 3\n2 4\n4 5\n5 2\n3 6\n6 7\n7 3\n7 8\n8 9\n9 7","output":"4 3"}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"d:\\Code\\TTUD\\Lab5\\Bridges&ArticulationPoints.cpp","group":"local","local":true}

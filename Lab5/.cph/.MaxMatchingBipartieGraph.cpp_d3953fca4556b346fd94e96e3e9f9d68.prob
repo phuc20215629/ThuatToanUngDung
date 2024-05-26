@@ -1,0 +1,1 @@
+{"name":"Local: MaxMatchingBipartieGraph","url":"d:\\Code\\TTUD\\Lab5\\MaxMatchingBipartieGraph.cpp","tests":[{"id":1716391661650,"input":"3 4\n2 1 4\n2 1 3\n1 2","output":"3"}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"d:\\Code\\TTUD\\Lab5\\MaxMatchingBipartieGraph.cpp","group":"local","local":true}
