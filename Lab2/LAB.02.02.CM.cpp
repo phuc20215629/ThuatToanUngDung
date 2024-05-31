@@ -7,8 +7,8 @@ int marked[30][30];
 
 bool check(int wk, int hk, int x, int y)
 {
-    if (wk + x > W || hk + y > H) // if that rect is out of range
-        return false;
+    // if (wk + x > W || hk + y > H) // if that rect is out of range
+    //     return false;
 
     for (int i = x; i < x + wk; i++) // check for overlapping rect
     {
@@ -35,7 +35,8 @@ void mark(int wk, int hk, int x, int y, bool markVal)
 
 void trySol(int k)
 {
-    if(sol == 1) return;
+    if (sol == 1)
+        return; // no need for further backtracking since we only need to know if it is possible to cut into n pieces or not
 
     for (int rotate = 0; rotate <= 1; rotate++)
     {
@@ -57,7 +58,7 @@ void trySol(int k)
                     {
                         sol = 1;
                         return;
-                    }              
+                    }
                     else
                         trySol(k + 1);
 
@@ -85,4 +86,4 @@ int main()
 
     cout << sol;
     return 0;
-}  
+}

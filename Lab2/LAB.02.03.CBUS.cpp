@@ -1,58 +1,58 @@
+// C++
 #include <bits/stdc++.h>
 using namespace std;
 
 int n, k, f = 0, sol = INT_MAX, cmin = INT_MAX;
-vector<bool> visited;
 vector<vector<int>> C;
-vector<int> x;
+vector<bool> visited;
+vector<int> trace;
 
-bool check(int v, int load)
+bool check(int city, int load)
 {
-    if (visited[v])
+    if (visited[city])
         return false;
-    if (v > n)
+    if (city > n) // drop passenger
     {
-        if (!visited[v - n])
-            return false; // to visit city v (v > n), city v - n must be visited before
+        if (!visited[city - n]) // to visit city v (v > n), city v - n must be visited before
+            return false;
     }
-    else
+    else // pick up passenger
     {
-        if (load + 1 > k)
-            return false; // if the bus is already full
+        if (load + 1 > k) // if the bus is already full
+            return false;
     }
     return true;
 }
 
-void tryPath(int k, int load)
+void trySol(int k, int load)
 {
-    for (int v = 1; v <= 2 * n; v++)
+    for (int city = 1; city <= 2 * n; city++)
     {
-        if (check(v, load))
+        if (check(city, load))
         {
-            x[k] = v;
-            f += C[x[k - 1]][v];
-            visited[v] = true;
-            if (v <= n)
+            trace[k] = city;
+            visited[city] = true;
+            f += C[trace[k - 1]][city];
+            if (city <= n)
                 load++;
             else
                 load--;
-            if (k == 2 * n) //updateBest
+
+            if (k == 2 * n) // every passenger is picked up and dropped
             {
-                if (f + C[v][0] < sol)
-                {
-                    sol = f + C[v][0];
-                }
+                if (f + C[city][0] < sol)
+                    sol = f + C[city][0];
             }
             else
             {
-                if (f + cmin * (2 * n + 1 - k) < sol)
-                    tryPath(k + 1, load);
+                if (f + cmin * (2 * n - k + 1) < sol)
+                    trySol(k + 1, load);
             }
 
-            //Return the status before backtracking
-            f -= C[x[k - 1]][v];
-            visited[v] = false;
-            if (v <= n)
+            // trace[k] = 0;
+            visited[city] = false;
+            f -= C[trace[k - 1]][city];
+            if (city <= n)
                 load--;
             else
                 load++;
@@ -62,25 +62,27 @@ void tryPath(int k, int load)
 
 int main()
 {
-    ios_base::sync_with_stdio(0);
+    ios_base::sync_with_stdio(false);
     cin.tie(0);
     cout.tie(0);
+
     cin >> n >> k;
     int m = 2 * n + 1;
     C.resize(m, vector<int>(m, 0));
     visited.resize(m, false);
-    x.resize(m, 0);
+    trace.resize(m, 0);
 
     for (int i = 0; i < m; i++)
     {
         for (int j = 0; j < m; j++)
         {
             cin >> C[i][j];
-            if(i != j) cmin = min(C[i][j], cmin);
+            if (i != j)
+                cmin = min(cmin, C[i][j]);
         }
     }
 
-    tryPath(1, 0);
-    cout << sol << endl;
+    trySol(1, 0);
+    cout << sol << "\n";
     return 0;
 }

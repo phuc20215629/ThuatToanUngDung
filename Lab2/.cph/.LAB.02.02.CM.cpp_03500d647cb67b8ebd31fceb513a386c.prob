@@ -1,0 +1,1 @@
+{"name":"Local: LAB","url":"d:\\Code\\TTUD\\Lab2\\LAB.02.02.CM.cpp","tests":[{"id":1717081662572,"input":"7 5\n4\n1 5\n6 2\n2 2\n4 3","output":"1"}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"d:\\Code\\TTUD\\Lab2\\LAB.02.02.CM.cpp","group":"local","local":true}
