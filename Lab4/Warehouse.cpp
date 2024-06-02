@@ -15,6 +15,11 @@ int main()
     for (int i = 1; i <= N; i++)
         cin >> t[i];
 
+    // for (int i = 1; i <= N; i++)
+    // {
+    //     goodsPickedUp[i][t[i]] = a[i];
+    // }
+
     for (int i = 1; i <= N; i++)
     {
         int farthestDest = max(0, i - D);

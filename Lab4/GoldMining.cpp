@@ -28,7 +28,7 @@ int main()
 
     for (int i = L1 + 1; i <= n; i++)
     {
-        // get the city with the highest gold mined end with that city within the range of L1
+        // only the most recent L1 cities are considered as candidates for contributing to the maximum amount of gold
         while (!dq.empty() && F[dq.front()] <= F[i - L1])
         {
             dq.pop_front();

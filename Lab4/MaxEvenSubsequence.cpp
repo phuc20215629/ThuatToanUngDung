@@ -2,7 +2,9 @@
 using namespace std;
 
 const int MAX = 1000005;
-long long s0[MAX] = {}, s1[MAX] = {}, a[MAX] = {};
+long long s0[MAX] = {}; // s0[i] max even weight that ends with a[i]
+long long s1[MAX] = {}; // s1[i] max odd weight that ends with a[i]
+long long a[MAX] = {};
 
 int main()
 {
@@ -20,26 +22,35 @@ int main()
 
     s0[1] = -1e10;
     s1[1] = a[1];
-    if(a[1] % 2 == 0) {
+    if (a[1] % 2 == 0)
+    {
         s0[1] = a[1];
         s1[1] = -1e10;
     }
 
-
-    for(int i = 2; i <= n; i++) {
-        if(a[i] % 2 == 0) {
+    for (int i = 2; i <= n; i++)
+    {
+        if (a[i] % 2 == 0)
+        {
             s0[i] = max(s0[i - 1] + a[i], a[i]);
-            if(s1[i - 1] == -1e10) s1[i] = -1e10; 
-            else s1[i] = s1[i - 1] + a[i];
-        } else {
+            if (s1[i - 1] == -1e10)
+                s1[i] = -1e10;
+            else
+                s1[i] = s1[i - 1] + a[i];
+        }
+        else
+        {
             s1[i] = max(s0[i - 1] + a[i], a[i]);
-            if(s1[i - 1] == -1e10) s0[i] = -1e10;  
-            else s0[i] = s1[i - 1] + a[i];
+            if (s1[i - 1] == -1e10)
+                s0[i] = -1e10;
+            else
+                s0[i] = s1[i - 1] + a[i];
         }
     }
 
     long long res = 0;
-    for(int i = 1; i <= n; i++) {
+    for (int i = 1; i <= n; i++)
+    {
         res = max(res, s0[i]);
     }
 
