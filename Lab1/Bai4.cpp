@@ -100,7 +100,7 @@ int maximalRectangle(const vector<vector<int>> &matrix)
     vector<int> heights(n, 0);
     int maxArea = 0;
 
-    // build the historam to find largest area to each row
+    // build the histogram to find largest area for each row
     for (int i = 0; i < n; i++)
     {
         for (int j = 0; j < m; j++)

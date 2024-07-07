@@ -15,10 +15,11 @@ int countStep()
     vector<vector<bool>> visited(r, vector<bool>(c, false));
     queue<Cell> q;
 
-    int rowDir[] = {-1, 0, 1, 0}; // Up, left, down, right
+    // Direction:  Up, left, down, right
+    int rowDir[] = {-1, 0, 1, 0};
     int colDir[] = {0, -1, 0, 1};
 
-    q.push(Cell(startR, startC, 0));
+    q.push(Cell(startR, startC, 1));
     visited[startR][startC] = true;
 
     // use BFS to find the shortest path
@@ -47,7 +48,7 @@ int countStep()
         }
     }
 
-    return -2;
+    return -1;
 }
 
 int main()
@@ -66,6 +67,6 @@ int main()
         }
     }
 
-    cout << countStep() + 1;
+    cout << countStep();
     return 0;
 }

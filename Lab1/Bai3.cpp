@@ -1,9 +1,12 @@
 #include <bits/stdc++.h>
 using namespace std;
 
+const int MAXN = 10000000;
+int arr[MAXN], segmentTree[MAXN];
+
 // https://www.youtube.com/watch?v=DpSYj7t1sbQ
 // Building Segment Tree
-void buildSegmentTree(const vector<int> &arr, vector<int> &segmentTree, int low, int high, int pos)
+void buildSegmentTree(int low, int high, int pos)
 {
     if (low == high)
     {
@@ -12,15 +15,32 @@ void buildSegmentTree(const vector<int> &arr, vector<int> &segmentTree, int low,
     }
 
     int mid = (low + high) / 2;
-    buildSegmentTree(arr, segmentTree, low, mid, 2 * pos + 1);      // 2 * pos + 1 is left child
-    buildSegmentTree(arr, segmentTree, mid + 1, high, 2 * pos + 2); // 2 * pos + 2 is right child
+    buildSegmentTree(low, mid, 2 * pos + 1);      // 2 * pos + 1 is left child
+    buildSegmentTree(mid + 1, high, 2 * pos + 2); // 2 * pos + 2 is right child
 
     // return with the minimum value of the 2 leaves
     segmentTree[pos] = min(segmentTree[2 * pos + 1], segmentTree[2 * pos + 2]);
 }
 
+void updateTree(int pos, int low, int high, int index, int value)
+{
+    if (low > high)
+        return;
+    if (index < low || index > high)
+        return;
+    if (low == high)
+    {
+        segmentTree[pos] = value;
+        return;
+    }
+    int mid = (low + high) / 2;
+    updateTree(2 * pos + 1, low, mid, index, value);
+    updateTree(2 * pos + 2, mid + 1, high, index, value);
+    segmentTree[pos] = min(segmentTree[2 * pos + 1], segmentTree[2 * pos + 2]);
+}
+
 // Find rmq in range [qlow, qhigh]
-int RMQ(const vector<int> &segmentTree, int low, int high, int qlow, int qhigh, int pos)
+int RMQ(int low, int high, int qlow, int qhigh, int pos)
 {
     // No overlap -> no further search
     if (qlow > high || qhigh < low)
@@ -32,8 +52,8 @@ int RMQ(const vector<int> &segmentTree, int low, int high, int qlow, int qhigh, 
 
     // Partial overlap -> divide into smaller segments to continue searching
     int mid = (low + high) / 2;
-    int left = RMQ(segmentTree, low, mid, qlow, qhigh, 2 * pos + 1);
-    int right = RMQ(segmentTree, mid + 1, high, qlow, qhigh, 2 * pos + 2);
+    int left = RMQ(low, mid, qlow, qhigh, 2 * pos + 1);
+    int right = RMQ(mid + 1, high, qlow, qhigh, 2 * pos + 2);
 
     // compare 2 side of the segment tree (left, right) to find the answer
     return min(left, right);
@@ -47,15 +67,22 @@ int main()
     int n;
     cin >> n;
 
-    vector<int> arr(n);
     for (int i = 0; i < n; i++)
     {
         cin >> arr[i];
     }
 
-    // Building Segment Tree with size of 2 * n - 1
-    vector<int> segmentTree(2 * n - 1);
-    buildSegmentTree(arr, segmentTree, 0, n - 1, 0);
+    // Building Segment Tree with size of 2 * n - 1 but start from 1
+    buildSegmentTree(0, n - 1, 0);
+
+    // Update segment tree
+    // int index, value;
+    // cin >> index >> value;
+
+    // n = n + 1;
+    // vector<int> segmentTree(2 * n - 1);
+    // buildSegmentTree(0, n - 2, 0);
+    // updateTree(arr, segmentTree, 0, 0, n - 1, index, value);
 
     int m;
     cin >> m;
@@ -66,7 +93,7 @@ int main()
         int start, end;
         cin >> start >> end;
 
-        int rmq = RMQ(segmentTree, 0, n - 1, start, end, 0);
+        int rmq = RMQ(0, n - 1, start, end, 0);
         totalRmq += rmq;
     }
 
