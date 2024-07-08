@@ -1,37 +1,37 @@
+// C++
 #include <bits/stdc++.h>
 using namespace std;
 
-// divide to conquer
-const int MAX = 100000;
-int arr[MAX];
-int n, c, res = 0;
+const int MAX = 100010;
+int T, N, C, arr[MAX];
 
-bool check(int start, int end, int midDis)
-{ // find the c - 1 element
+// find the c - 1 elements that satisfy the condition
+bool check(int dis)
+{
     int count = 1;
-    int chosenIndex = start;
-    for (int i = start; i <= end; i++)
+    int chosenIndex = 0;
+    for (int i = 0; i < N; i++)
     {
-        if (arr[i] - arr[chosenIndex] >= midDis)
+        if (arr[i] - arr[chosenIndex] >= dis)
         {
-            chosenIndex = i;
             count++;
-            if (count == c)
-            {
-                return true;
-            }
+            chosenIndex = i;
         }
+        if (count == C)
+            return true;
     }
+
     return false;
 }
 
-// divide by the distance
-void trySub(int start, int end, int loDis, int hiDis)
+// loop till maximum of distance is reached
+int TrySol(int loDis, int hiDis)
 {
+    int res = 0;
     while (loDis <= hiDis)
     {
         int midDis = (loDis + hiDis) / 2;
-        if (check(start, end, midDis))
+        if (check(midDis))
         {
             res = midDis;
             loDis = midDis + 1;
@@ -41,6 +41,7 @@ void trySub(int start, int end, int loDis, int hiDis)
             hiDis = midDis - 1;
         }
     }
+    return res;
 }
 
 int main()
@@ -48,17 +49,16 @@ int main()
     ios_base::sync_with_stdio(0);
     cin.tie(0);
     cout.tie(0);
-    int t;
-    cin >> t;
 
-    while (t-- != 0)
+    cin >> T;
+    while (T-- != 0)
     {
-        cin >> n >> c;
-
-        for (int i = 0; i < n; i++)
+        cin >> N >> C;
+        for (int i = 0; i < N; i++)
             cin >> arr[i];
-        sort(arr, arr + n);
-        trySub(0, n - 1, 0, arr[n - 1] - arr[0]);
-        cout << res << "\n";
+        sort(arr, arr + N);
+        cout << TrySol(0, arr[N - 1] - arr[0]) << "\n";
     }
+
+    return 0;
 }
