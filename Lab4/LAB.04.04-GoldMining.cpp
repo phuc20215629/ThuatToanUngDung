@@ -17,7 +17,7 @@ int main()
     }
 
     vector<int> F(n + 1); // F[i]: maximum gold mined from city 1->i include city i
-    deque<int> dq;
+    deque<int> dq;        // front -> back: cities far away from current city
 
     // since minimum hop is L1, cities from 1->L1 are the only ones in F[i]
     for (int i = 1; i <= L1; i++)
