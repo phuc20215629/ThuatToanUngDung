@@ -12,7 +12,7 @@ void Try(int k, int vehicle)
     {
         if (!visited[customer])
         {
-            // assign customers to vehicle j
+            // try to assign customers to vehicle
             int curVehicle = vehicle;
             if (load[curVehicle] - d[customer] >= 0)
             {
@@ -39,11 +39,12 @@ void Try(int k, int vehicle)
                 load[curVehicle] += d[customer];
             }
 
-            // assign next vehicle
+            // if vehicle is not capable of transferring anymore -> assign next vehicle
             curVehicle++;
             if (curVehicle <= K)
             {
                 // check for no collision (2 trucks serves the same customer)
+                // only need to check for the first customer because the other customers is in ascending order so there wouldn't be a collision
                 if (load[curVehicle] - d[customer] >= 0 && customer > firstCustomerOfTruck[curVehicle - 1])
                 {
                     firstCustomerOfTruck[curVehicle] = customer;
