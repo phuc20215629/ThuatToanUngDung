@@ -20,7 +20,7 @@ void calculateShortestDistances(const vector<City> &cities, vector<vector<int>> 
 
     for (int u = 0; u < n; u++)
     {
-        vector<int> minDist(n, INT_MAX);
+        vector<int> minDist(n, INT_MAX); // min distance between u and i
         vector<bool> visited(n, false);
         minDist[u] = 0;
         visited[u] = true;
@@ -52,11 +52,10 @@ int findShortestPath(const vector<City> &cities, const vector<vector<int>> &dist
 {
     int n = cities.size();
 
-    vector<int> minCost(n, INT_MAX);
-    vector<bool> visited(n, false);
-    minCost[0] = 0;
+    vector<int> minCost(n, INT_MAX); // minCost[i]: min cost to travel to city i (exclude the city i cost)
+    minCost[0] = 0;                  // start from city 0
 
-    priority_queue<pair<int, int>, vector<pair<int, int>>, greater<pair<int, int>>> pq; // (cost, city)
+    priority_queue<pair<int, int>, vector<pair<int, int>>, greater<pair<int, int>>> pq; // (mincost[city], city)
     pq.push(make_pair(0, 0));
 
     while (!pq.empty())
@@ -101,7 +100,7 @@ int main()
         cin >> cities[i].cost >> cities[i].maxCities;
     }
 
-    vector<vector<int>> dist(n, vector<int>(n, 0));
+    vector<vector<int>> dist(n, vector<int>(n, 0)); // dist[u][v]: will store the minimum distance between city u and v
     for (int i = 0; i < m; i++)
     {
         int u, v;

@@ -1,0 +1,1 @@
+{"name":"Local: HungarianAlgorithm","url":"d:\\Code\\TTUD\\TrenLop\\HungarianAlgorithm.cpp","tests":[{"id":1720578162884,"input":"3 3\n2500  4000  3500\n 4000  6000  3500\n 2000  4000  2500","output":"9500"}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"d:\\Code\\TTUD\\TrenLop\\HungarianAlgorithm.cpp","group":"local","local":true}

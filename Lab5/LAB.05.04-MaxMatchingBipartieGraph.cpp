@@ -10,6 +10,7 @@ bool findAugmentingPath(int u, const vector<vector<int>> &graph, vector<int> &ma
         if (!visited[v])
         {
             visited[v] = true;
+            // if task is already assigned or is assigned to another person -> reassign it
             if (match[v] == -1 || findAugmentingPath(match[v], graph, match, visited))
             {
                 match[v] = u;

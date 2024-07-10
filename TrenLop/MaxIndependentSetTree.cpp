@@ -22,26 +22,6 @@ void dfs(int u, int parent)
     }
 }
 
-void dfsStack(int s, int parent) {
-    stack<pair<int, int>> st;
-    st.push({s, parent});
-    
-    while(!st.empty()) {
-        int u = st.top().first;
-        int p = st.top().second;
-        st.pop();
-        dp[u][0] = 0;
-        dp[u][1] = w[u];
-        for (int v : graph[u]) {
-            if (v != p) {
-                st.push({v, u});
-                dp[u][0] += max(dp[v][0], dp[v][1]);
-                dp[u][1] += dp[v][0];
-            }
-        }
-    }
-}
-
 int main()
 {
     ios_base::sync_with_stdio(false);
@@ -63,8 +43,7 @@ int main()
         graph[v].push_back(u);
     }
 
-    // dfs(1, -1);
-    dfsStack(1, -1);
+    dfs(1, -1);
 
     int maxWeight = max(dp[1][0], dp[1][1]);
     cout << maxWeight << endl;

@@ -1,0 +1,1 @@
+{"name":"Local: LAB","url":"d:\\Code\\TTUD\\Lab5\\LAB.05.03-BusInterCity.cpp","tests":[{"id":1720582091717,"input":"6 6\n10 2\n30 1\n50 1\n20 3\n30 1\n20 1\n1 2\n1 3\n1 5\n2 4\n2 5\n4 6","output":"30"}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"d:\\Code\\TTUD\\Lab5\\LAB.05.03-BusInterCity.cpp","group":"local","local":true}
