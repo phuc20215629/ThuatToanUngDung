@@ -1,6 +1,8 @@
 #include <bits/stdc++.h>
 using namespace std;
 
+/*Find square root of x with EPS approximately*/
+
 int main()
 {
     double x = 9.2;

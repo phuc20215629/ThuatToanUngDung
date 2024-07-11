@@ -1,6 +1,17 @@
 #include <bits/stdc++.h>
 using namespace std;
 
+/*
+A project has n tasks 1,. . ., n. Task i has duration d(i) to be completed (i=1,. . ., n).
+There are precedence constraints between tasks represented by a set Q of pairs:
+for each (i,j)  in Q, task j cannot be started before the completion of task i.
+Compute the earliest completion time  of the project.
+Input
+Line 1: contains n and m (1 <= n <= 10^4, 1 <= m <= 200000)
+Line 2: contains d(1),. . ., d(n) (1 <= d(i) <= 1000)
+Line i+3 (i=1,. . ., m) : contains i and j : task j cannot be started to execute before the completion of task i
+*/
+
 int main()
 {
     ios_base::sync_with_stdio(false);

@@ -2,6 +2,12 @@
 #include <bits/stdc++.h>
 using namespace std;
 
+/*
+Given N elements (2≤ N ≤100,000) on a straight line at positions x1,…, xN (0≤ xi≤1,000,000,000).
+The distance of a subset of N elements is defined to be the minimum distance between two elements.
+Find the subset of N given elements containing exactly C elements such that the distance is maximal.
+*/
+
 const int MAX = 100010;
 int T, N, C, arr[MAX];
 

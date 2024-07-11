@@ -1,6 +1,14 @@
 #include <bits/stdc++.h>
 using namespace std;
 
+/*
+Vương quốc này có những kho báu bí ẩn, mỗi kho chứa một lượng vàng khổng lồ ciđược đặt tại các vị trí kỳ diệu có toạ độ (xi, yi).
+Những người đi tìm kho báu chỉ có thể bắt đầu hành trình từ (0,0) và theo một quy tắc đặc biệt:
+họ chỉ được phép di chuyển theo hướng không giảm của cả hai toạ độ x và y - để tìm đến các kho báu.
+Điều này nghĩa là từ kho báu tại (xi, yi), người ta chỉ có thể tiếp tục hành trình đến kho báu (xj, yj) nếu xi ≤ xj và yi ≤ yj.
+Kẻ tìm kho báu phải sắp xếp một lộ trình khôn ngoan để thu thập được nhiều vàng nhất.
+*/
+
 struct City
 {
     int x, y;

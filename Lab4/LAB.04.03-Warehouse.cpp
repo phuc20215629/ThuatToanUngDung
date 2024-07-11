@@ -1,6 +1,16 @@
 #include <bits/stdc++.h>
 using namespace std;
 
+/*
+A truck is planned to arrive at some stations among N stations 1, 2, . . ., N located on a line.
+Station i (i = 1,…,N) has coordinate i and has following information
+ai: amount of goods
+ti: pickup time duration for taking goods
+The route of the truck is a sequence of stations x1 < x2 < . . . < xk (1 ≤ xj ≤ N, j = 1,…, k).
+Due to technical constraints, the distance between two consecutive stations that the truck arrives xi and xi+1 is less than or equal to D
+and the total pickup time duration cannot exceed T. Find a route for the truck such that total amount of goods picked up is maximal.
+*/
+
 int N, T, D, a[1001], t[1001], maxGoodsPickedUp = 0;
 int goodsPickedUp[1001][101]; // goodsPickedUp[i][j]: max goods picked up in time j that ends at city i
 

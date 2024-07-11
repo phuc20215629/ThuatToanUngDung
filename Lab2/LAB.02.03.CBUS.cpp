@@ -2,6 +2,14 @@
 #include <bits/stdc++.h>
 using namespace std;
 
+/*
+There are n passengers 1, 2, …, n. The passenger i want to travel from point i to point i + n (i = 1,2,…,n).
+There is a bus located at point 0 and has k places for transporting the passengers
+(it means at any time, there are at most k passengers on the bus).
+You are given the distance matrix c in which c(i,j) is the traveling distance from point i to point j (i, j = 0,1,…, 2n).
+Compute the shortest route for the bus, serving n passengers and coming back to point 0.
+*/
+
 int n, k, f = 0, sol = INT_MAX, cmin = INT_MAX;
 vector<vector<int>> C;
 vector<bool> visited;

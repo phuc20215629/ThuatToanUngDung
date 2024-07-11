@@ -1,6 +1,13 @@
 #include <bits/stdc++.h>
 using namespace std;
 
+/*
+Given a sequence of n integers a=a1,..., an.
+A subsequence of a consists of contiguous elements of a (for example, ai, ai+1,... ,aj).
+The weight of a subsequence is defined to be the sum of its elements.
+A subsequence is called even-subsequnce if its weight is even. Find the even-subsequence of a having largest weight.
+*/
+
 const int MAX = 1000005;
 long long s0[MAX] = {}; // s0[i] max even weight that ends with a[i]
 long long s1[MAX] = {}; // s1[i] max odd weight that ends with a[i]

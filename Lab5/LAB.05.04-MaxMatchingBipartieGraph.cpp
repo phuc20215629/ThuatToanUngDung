@@ -1,6 +1,16 @@
 #include <bits/stdc++.h>
 using namespace std;
 
+/*
+There are  n tasks 1,. . .,n and m staffs 1, . . , m.
+T(i) is the set of staffs that can perform the task i (i=1, . . ., n).
+Compute an assignment of staffs to tasks such that each task is assigned to at most one staff
+and each staff cannot be assigned to more than one task and the number of tasks assigned is maximal.
+Input
+Line 1: contains 2 positive integer n và m (1 <=  n,m <= 10000)
+Line i+1 (i=1, . . .,n) contains a positive integer k and k integer of T(i)
+*/
+
 int n, m;
 
 bool findAugmentingPath(int u, const vector<vector<int>> &graph, vector<int> &match, vector<bool> &visited)
@@ -21,12 +31,12 @@ bool findAugmentingPath(int u, const vector<vector<int>> &graph, vector<int> &ma
     return false;
 }
 
-int maxMatching(const vector<vector<int>> &taskStaffs)
+int maxMatching(const vector<vector<int>> &staffForTask)
 {
     vector<vector<int>> graph(n);
     for (int i = 0; i < n; i++)
     {
-        for (int staff : taskStaffs[i])
+        for (int staff : staffForTask[i])
         {
             graph[i].push_back(staff);
         }
@@ -54,19 +64,19 @@ int main()
     cout.tie(0);
     cin >> n >> m;
 
-    vector<vector<int>> taskStaffs(n);
+    vector<vector<int>> staffForTask(n);
     for (int i = 0; i < n; i++)
     {
         int k;
         cin >> k;
-        taskStaffs[i].resize(k);
+        staffForTask[i].resize(k);
         for (int j = 0; j < k; j++)
         {
-            cin >> taskStaffs[i][j];
+            cin >> staffForTask[i][j];
         }
     }
 
-    cout << maxMatching(taskStaffs) << endl;
+    cout << maxMatching(staffForTask) << endl;
 
     return 0;
 }

@@ -1,21 +1,66 @@
+/*
+Description
+Data about submission of a programming contest consists a sequence of lines, each line has the following information:
+                                                      <UserID> <ProblemID> <TimePoint> <Status> <Point>
+in which the user <UserID> submits his/her code to solve the problem <ProblemID> at time-point <TimePoint>, and gets status <Status> and point <Point>
+<UserID>: string of length from 3 to 10
+<ProblemID>: string under the format Pxy where x, y are digits 0,1,...,9 (for example P03, P10)
+<TimePoint>: string representing time-point with the format HH:MM:SS (for example, 09:45:20 means the time-point 9 hour 45 minutes 20 seconds)
+<Status>: string with two cases (ERR, OK)
+<Point>: integer from {0, 1, 2, ..., 10}
+
+A user can submit the code for solving each problem several time. The point that the user gets for a problem is the maximal point among the submissions for that problem.
+
+Perform a sequence of queries of following types:
+?total_number_submissions: return the number of submissions of the contest
+?number_error_submission: return the number of submissions having status ERR
+?number_error_submission_of_user <UserID>: return the number of submission having status ERR of user <UserID>
+?total_point_of_user <UserID>: return the total point of user <UserID>
+?number_submission_period <from_time_point> <to_time_point>: return the number of submissions in the period from <from_time_point> to <to_time_point> (inclusive)
+
+Input
+The input consists of two blocks of data:
+The first block is the operational data, which is a sequence of lines (number of lines can be up to 100000), each line contains the information of a submission with above format .The first block is terminated with a line containing the character #
+The second block is the query block, which is a sequence of lines (number of lines can be up to 100000), each line is a query described above. The second block is terminated with a line containing the character #
+
+Output
+Write in each line, the result of the corresponding query
+
+Example
+Input
+U001 P01 10:30:20 ERR 0
+U001 P01 10:35:20 OK 10
+U001 P02 10:40:20 ERR 0
+U001 P02 10:55:20 OK 7
+U002 P01 10:40:20 ERR 0
+U001 P01 11:35:20 OK 8
+U002 P02 10:40:20 OK 10
+#
+?total_number_submissions
+?number_error_submision
+?number_error_submision_of_user U002
+?total_point_of_user U001
+?number_submission_period 10:00:00 11:30:45
+#
+
+
+Output
+7
+3
+1
+17
+6
+*/
+
 #include <bits/stdc++.h>
 using namespace std;
 
-int number_of_submission = 0;
-
-struct Submission
-{
-    string user_id, problem_id, status;
-    int time, point;
-};
-
-int timeStringToInt(const string &time)
-{
-    int hour = stoi(time.substr(0, 2));
-    int minute = stoi(time.substr(3, 2));
-    int second = stoi(time.substr(6, 2));
-    return hour * 3600 + minute * 60 + second;
-}
+int total_number_submissions = 0;
+int number_error_submission = 0;
+unordered_map<string, int> number_error_submission_of_user;
+unordered_map<string, unordered_map<string, int>> total_point_of_user_per_problem;
+unordered_map<string, int> total_point_of_user;
+map<string, int> number_submission_period;
 
 int main()
 {
@@ -23,92 +68,74 @@ int main()
     cin.tie(0);
     cout.tie(0);
 
-    map<int, vector<Submission>> submissions;
+    string UserID, ProblemID, TimePoint, Status;
+    int Point;
 
-    int point;
-    string user_id, problem_id, status, time, line;
-    while (cin >> user_id && user_id != "#")
+    while (1)
     {
-        cin >> problem_id >> time >> status >> point;
-        int time_int = timeStringToInt(time);
-        Submission submission = {user_id, problem_id, status, time_int, point};
-        submissions[time_int].push_back(submission);
-        ++number_of_submission;
-    }
+        cin >> UserID;
+        if (UserID == "#")
+            break;
+        cin >> ProblemID >> TimePoint >> Status >> Point;
 
-    while (cin >> line && line != "#")
-    {
-        if (line == "?total_number_submissions")
+        total_number_submissions++;
+        number_submission_period[TimePoint]++;
+
+        if (Status == "ERR")
         {
-            cout << number_of_submission << "\n";
+            number_error_submission_of_user[UserID]++;
+            number_error_submission++;
         }
-        else if (line == "?number_error_submision")
+        else
         {
-            int count = 0;
-            for (const auto &submission : submissions)
+            if (total_point_of_user_per_problem[UserID][ProblemID] < Point)
             {
-                for (const auto &s : submission.second)
-                {
-                    if (s.status == "ERR")
-                        ++count;
-                }
+                total_point_of_user[UserID] += Point - total_point_of_user_per_problem[UserID][ProblemID];
+                total_point_of_user_per_problem[UserID][ProblemID] = Point;
             }
-            cout << count << "\n";
-        }
-        else if (line == "?number_error_submision_of_user")
-        {
-            string user;
-            cin >> user;
-            int count = 0;
-            for (const auto &submission : submissions)
-            {
-                for (const auto &s : submission.second)
-                {
-                    if (s.status == "ERR" && s.user_id == user)
-                        ++count;
-                }
-            }
-            cout << count << "\n";
-        }
-        else if (line == "?total_point_of_user")
-        {
-            string user;
-            cin >> user;
-            int point = 0;
-            unordered_map<string, int> maxPointsForProblem;
-            for (const auto &submission : submissions)
-            {
-                for (const auto &s : submission.second)
-                {
-                    if (s.user_id == user)
-                    {
-                        if (s.status == "ERR")
-                            continue;
-                        string pid = s.problem_id;
-                        if (maxPointsForProblem.find(pid) == maxPointsForProblem.end() ||
-                            s.point > maxPointsForProblem[pid])
-                        {
-                            maxPointsForProblem[pid] = s.point;
-                        }
-                    }
-                }
-            }
-            for (const auto &p : maxPointsForProblem)
-                point += p.second;
-            cout << point << "\n";
-        }
-        else if (line == "?number_submission_period")
-        {
-            string start_time, end_time;
-            cin >> start_time >> end_time;
-            int start_time_int = timeStringToInt(start_time);
-            int end_time_int = timeStringToInt(end_time);
-            int count = 0;
-            for (auto it = submissions.lower_bound(start_time_int); it != submissions.upper_bound(end_time_int); ++it)
-                count += it->second.size();
-            cout << count << "\n";
         }
     }
 
+    number_submission_period["00:00:00"] = 0;
+    number_submission_period["24:00:00"] = 0;
+    int pre = 0;
+    for (auto &period : number_submission_period)
+    {
+        pre = period.second += pre;
+    }
+
+    string order;
+    while (1)
+    {
+        cin >> order;
+        if (order == "#")
+            break;
+        else if (order == "?total_number_submissions")
+            cout << total_number_submissions << endl;
+        else if (order == "?number_error_submision")
+            cout << number_error_submission << endl;
+        else if (order == "?number_error_submision_of_user")
+        {
+            string userID;
+            cin >> userID;
+            cout << number_error_submission_of_user[userID] << endl;
+        }
+        else if (order == "?total_point_of_user")
+        {
+            string userID;
+            cin >> userID;
+
+            cout << total_point_of_user[userID] << endl;
+        }
+        else if (order == "?number_submission_period")
+        {
+            string fromTime, toTime;
+            cin >> fromTime >> toTime;
+
+            auto itFromTime = number_submission_period.lower_bound(fromTime);
+            auto itToTime = number_submission_period.upper_bound(toTime);
+            cout << (--itToTime)->second - (--itFromTime)->second << endl;
+        }
+    }
     return 0;
 }

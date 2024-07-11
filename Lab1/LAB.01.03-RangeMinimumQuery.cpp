@@ -1,6 +1,12 @@
 #include <bits/stdc++.h>
 using namespace std;
 
+/*
+Given a sequence of n integers a,...,an-1.
+We denote rmq(i,j) the minimum element of the sequence i, ai+1,...,aj. Given m pairs (i1,j1),. . .,(im,jm),
+compute the sum Q = rmq(i1,j1) + ... + rmq(im,jm)
+*/
+
 const int MAXN = 10000000;
 int arr[MAXN], segmentTree[MAXN];
 
@@ -72,7 +78,7 @@ int main()
         cin >> arr[i];
     }
 
-    // Building Segment Tree with size of 2 * n - 1 but start from 1
+    // Building Segment Tree with size of 2 * n - 1 but start from 0
     buildSegmentTree(0, n - 1, 0);
 
     // Update segment tree

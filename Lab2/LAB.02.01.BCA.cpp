@@ -1,6 +1,17 @@
 #include <bits/stdc++.h>
 using namespace std;
 
+/*
+At the beginning of the semester, the head of a computer science department D have to assign courses to teachers in a balanced way.
+The department D has m teachers T={1,2,...,m} and n courses C={1,2,...,n}.
+Each teacher t∈T has a preference list which is a list of courses he/she can teach depending on his/her specialization.
+We known a list of pairs of conflicting two courses that cannot be assigned to the same teacher
+as these courses have been already scheduled in the same slot of the timetable.
+The load of a teacher is the number of courses assigned to her/him.
+How to assign nn courses to  teacher such that each course assigned to a teacher is in his/her preference list,
+no two conflicting courses are assigned to the same teacher, and the maximal load is minimal.
+*/
+
 int m, n, sol = INT_MAX;
 vector<vector<bool>> confCourse;
 vector<vector<int>> prefList;

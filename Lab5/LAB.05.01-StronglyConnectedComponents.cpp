@@ -1,6 +1,16 @@
 #include <bits/stdc++.h>
 using namespace std;
 
+/*
+Given a directed graph G=(V,E) where V={1,. . ., N} is the number of nodes and the set E has M arcs.
+Compute number of strongly connected components of G.
+nput
+Line 1: two positive integers N and M (1 <= N <= 10^5, 1 <= M <= 10^6)
+Line i+1 (i=1,. . ., M\): contains two positive integers u and v which are endpoints of ith arc
+Output
+Write the number of strongly connected components of G
+*/
+
 const int MAX = 1e6;
 int N, M, cur_num = 1, ans = 0;
 bool onstack[MAX] = {false};
@@ -23,6 +33,7 @@ void scc(int v)
         else if (onstack[u])
             low[v] = min(low[v], num[u]);
     }
+
     if (num[v] == low[v])
     {
         ans++;

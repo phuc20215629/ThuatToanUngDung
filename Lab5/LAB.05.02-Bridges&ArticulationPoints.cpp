@@ -1,6 +1,15 @@
 #include <bits/stdc++.h>
 using namespace std;
 
+/*
+Given an undirected graph containing N vertices and M edges, find all the articulation points and the bridges in the graph.
+Input
+The first line consists of two space-separated integers denoting N and M,
+M lines follow, each containing two space-separated integers X and Y denoting there is an edge between X and Y.
+Output
+One line consists of two integers denoting the number of articulation points and the number of bridges.
+*/
+
 const int MAX = 1e6;
 int N, M, cur_num = 1, bridges_cnt = 0, artic_point_cnt = 0;
 bool isArtic[MAX];

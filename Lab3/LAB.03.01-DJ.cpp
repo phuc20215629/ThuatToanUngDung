@@ -1,6 +1,11 @@
 #include <bits/stdc++.h>
 using namespace std;
 
+/*
+Given a set of segments X = {(a1, b1),..., (an, bn)} in which ai < bi are coordinates of the segment i on a line, i = 1,..., n.
+Find a subset of X having largest cardinality in which no two segments of the subset intersect
+*/
+
 vector<pair<int, int>> segment;
 int n, minBound = INT_MAX, res = 1;
 

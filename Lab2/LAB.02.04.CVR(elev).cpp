@@ -1,6 +1,20 @@
 #include <bits/stdc++.h>
 using namespace std;
 
+/*
+A fleet of K identical trucks having capacity Q need to be scheduled to delivery pepsi packages from a central depot 0 to clients 1,2,…,n.
+Each client i requests d[i] packages. The distance from location i to location j is c[i,j], 0≤i,j≤n.
+A delivery solution is a set of routes: each truck is associated with a route, starting from depot,
+visiting some clients and returning to the depot for deliverying requested pepsi packages such that:
+Each client is visited exactly by one route
+Total number of packages requested by clients of each truck cannot exceed its capacity
+Goal
+Find a solution having minimal total travel distance
+Note that:
+There might be the case that a truck does not visit any client (empty route)
+The orders of clients in a route is important, e.g., routes 0 -> 1 -> 2 -> 3 -> 0 and 0 -> 3-> 2 -> 1 -> 0 are different.
+*/
+
 int n, K, Q, sol = INT_MAX, cmin = INT_MAX, sum = 0;
 int visited[100], firstCustomerOfTruck[100];
 int trace[100], load[100], d[100], c[100][100];

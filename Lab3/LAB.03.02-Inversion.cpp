@@ -1,6 +1,11 @@
 #include <bits/stdc++.h>
 using namespace std;
 
+/*
+Given a sequence of integers a1, a2, ..., an. A pair (i, j) is call an inversion if i < j and ai > aj.
+Compute the number Q of inversions
+*/
+
 const long long MOD = 1e9 + 7;
 int arr[1000000], temp[1000000];
 
@@ -22,7 +27,7 @@ long long mergeAndCount(int left, int mid, int right)
         {
             temp[k] = arr[j];
             j++;
-            inversionCount += mid - i + 1; // Increment inversion count
+            inversionCount += mid - i + 1; // Increment inversion count for all remaining elements in left subarray
         }
         k++;
     }

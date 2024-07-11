@@ -1,15 +1,18 @@
 #include <bits/stdc++.h>
 using namespace std;
 
+/*
+Given a material having the shape rectangle with height H and width W.
+We need to cut this material into n smaller rectangle submaterials of size (h1,w1), (h2, w2), ..., (hn, wn).
+Write a program to check if we can perform this cut.
+*/
+
 int H, W, n, sol = 0;
 int h[15], w[15];
 int marked[30][30];
 
 bool check(int wk, int hk, int x, int y)
 {
-    // if (wk + x > W || hk + y > H) // if that rect is out of range
-    //     return false;
-
     for (int i = x; i < x + wk; i++) // check for overlapping rect
     {
         for (int j = y; j < y + hk; j++)

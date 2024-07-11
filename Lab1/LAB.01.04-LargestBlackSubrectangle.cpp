@@ -1,48 +1,15 @@
 #include <bits/stdc++.h>
 using namespace std;
 
+/*
+Một hình chữ nhật kích thước n x m được chia thành các ô vuông con 1 x 1 với 2 màu đen hoặc trắng.
+Hình chữ nhật được biểu diễn bởi ma trận A(n x m) trong đó A(i, j) = 1 có nghĩa ô hàng i, cột j là ô đen
+và A(i, j) = 0 có nghĩa ô vuông hàng i cột j là ô trắng.
+Hãy xác định hình chữ nhật con của bảng đã cho bao gồm toàn ô đen và có diện tích lớn nhất.
+*/
+
 // Idea Largest Rectangular Area in a Histogram using Stack
 int n, m;
-
-// int maxS(const vector<int> &heights)
-// {
-//     stack<int> s;
-//     int maxArea = 0;
-//     int n = heights.size();
-//     int i = 0;
-
-//     // process from left to right
-//     while (i < n)
-//     {
-//         if (s.empty() || heights[i] >= heights[s.top()])
-//         {
-//             s.push(i);
-//             i++;
-//         }
-//         else
-//         {
-//             int tp = s.top();
-//             s.pop();
-//             int area = heights[tp] * (s.empty() ? i : (i - s.top() - 1));
-//             maxArea = max(maxArea, area);
-//         }
-//     }
-
-//     // process from right to left
-//     while (!s.empty())
-//     {
-//         int tmp = s.top();
-//         s.pop();
-//         int area;
-//         if (s.empty())
-//             area = heights[tmp] * i;
-//         else
-//             area = heights[tmp] * (i - s.top() - 1);
-//         maxArea = max(maxArea, area);
-//     }
-
-//     return maxArea;
-// }
 
 int maxS(const vector<int> &heights)
 {
