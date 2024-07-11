@@ -14,6 +14,7 @@ struct Node
         parent = _parent;
     }
 };
+
 int n;
 int x[10];
 bool visited[100];
@@ -27,6 +28,7 @@ void solution()
         cout << x[i];
     cout << endl;
 }
+
 int main()
 {
     cin >> n;
