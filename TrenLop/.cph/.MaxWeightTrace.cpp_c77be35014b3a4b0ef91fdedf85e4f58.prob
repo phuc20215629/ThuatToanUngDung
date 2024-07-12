@@ -1,0 +1,1 @@
+{"name":"Local: MaxWeightTrace","url":"d:\\Code\\TTUD\\TrenLop\\MaxWeightTrace.cpp","tests":[{"id":1720750993739,"input":"8\n2 -1 5 -12 1 14 4 -3","output":""}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"d:\\Code\\TTUD\\TrenLop\\MaxWeightTrace.cpp","group":"local","local":true}

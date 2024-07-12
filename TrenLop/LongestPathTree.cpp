@@ -1,25 +1,31 @@
 #include <bits/stdc++.h>
-
 using namespace std;
 
-const int MAX = 1e5 + 1;
-
 int V;
-vector<int> d(MAX, 0);
-vector<bool> visited(MAX, false);
-vector<vector<pair<int, int>>> adj(MAX);
+vector<vector<pair<int, int>>> adj;
+vector<bool> visited;
+vector<int> d;
 
-void DFS(int u)
+void DFS(int p)
 {
-    visited[u] = true;
-    for (auto &edge : adj[u])
+    visited.clear();
+    d.clear();
+    visited.resize(V + 1, false);
+    d.resize(V + 1, 0);
+    stack<int> s;
+    s.push(p);
+    while (!s.empty())
     {
-        int x = edge.first;
-        int weight = edge.second;
-        if (d[x] == 0 && !visited[x])
+        int u = s.top();
+        s.pop();
+        visited[u] = true;
+        for (auto v : adj[u])
         {
-            d[x] = d[u] + weight;
-            DFS(x);
+            if (!visited[v.first] && d[v.first] == 0)
+            {
+                s.push(v.first);
+                d[v.first] = d[u] + v.second;
+            }
         }
     }
 }
@@ -28,13 +34,15 @@ void DFS(int u)
 // -> the farthest path is the path from x -> y
 int main()
 {
-    ios_base::sync_with_stdio(false);
+    ios_base::sync_with_stdio(0);
     cin.tie(0);
     cout.tie(0);
 
     cin >> V;
-
-    for (int i = 0; i < V - 1; i++)
+    adj.resize(V + 1);
+    visited.resize(V + 1, false);
+    d.resize(V + 1, 0);
+    for (int i = 0; i < V; i++)
     {
         int a, b, c;
         cin >> a >> b >> c;
@@ -42,33 +50,25 @@ int main()
         adj[b].push_back({a, c});
     }
 
-    int x = 1, tmp1 = -1;
+    int x = 1;
     DFS(x);
-
     for (int i = 1; i <= V; i++)
     {
-        if (d[i] > tmp1)
+        if (d[i] > d[x])
         {
             x = i;
-            tmp1 = d[i];
         }
     }
 
-    visited.assign(V + 1, false);
-    d.assign(V + 1, 0);
     DFS(x);
-
-    int y, tmp2 = -1;
     for (int i = 1; i <= V; i++)
     {
-        if (d[i] > tmp2 && i != x)
+        if (d[i] > d[x] && i != x)
         {
-            y = i;
-            tmp2 = d[i];
+            x = i;
         }
     }
 
-    cout << d[y] << '\n';
-
+    cout << d[x] << '\n';
     return 0;
 }

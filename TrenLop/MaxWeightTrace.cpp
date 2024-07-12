@@ -20,8 +20,8 @@ void trace(int i)
     if (i != 0 && mem[i] == mem[i - 1] + a[i])
     {
         trace(i - 1);
-        cout << a[i] << " ";
     }
+    cout << a[i] << " ";
 }
 
 int main()
@@ -41,7 +41,8 @@ int main()
             pos = i;
         }
     }
-
+    cout << ans << endl;
+    cout << pos << endl;
     trace(pos);
     return 0;
 }
